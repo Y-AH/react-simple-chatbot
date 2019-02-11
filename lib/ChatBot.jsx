@@ -58,8 +58,15 @@ class ChatBot extends Component {
     } = this.props;
     const chatSteps = {};
 
-    const defaultBotSettings = { delay: botDelay, avatar: botAvatar };
-    const defaultUserSettings = { delay: userDelay, avatar: userAvatar, hideInput: false };
+    const defaultBotSettings = {
+      delay: botDelay,
+      avatar: botAvatar
+    };
+    const defaultUserSettings = {
+      delay: userDelay,
+      avatar: userAvatar,
+      hideInput: false
+    };
     const defaultCustomSettings = { delay: customDelay };
 
     for (let i = 0, len = steps.length; i < len; i += 1) {
@@ -182,7 +189,10 @@ class ChatBot extends Component {
 
   getTriggeredStep = (trigger, value) => {
     const steps = this.generateRenderedStepsById();
-    return typeof trigger === 'function' ? trigger({ value, steps }) : trigger;
+    return typeof trigger === 'function' ? trigger({
+      value,
+      steps
+    }) : trigger;
   };
 
   getStepMessage = (message) => {
@@ -190,7 +200,10 @@ class ChatBot extends Component {
     const lastStepIndex = previousSteps.length > 0 ? previousSteps.length - 1 : 0;
     const steps = this.generateRenderedStepsById();
     const previousValue = previousSteps[lastStepIndex].value;
-    return typeof message === 'function' ? message({ previousValue, steps }) : message;
+    return typeof message === 'function' ? message({
+      previousValue,
+      steps
+    }) : message;
   };
 
   generateRenderedStepsById = () => {
@@ -290,7 +303,11 @@ class ChatBot extends Component {
       previousStep = currentStep;
       currentStep = nextStep;
 
-      this.setState({ renderedSteps, currentStep, previousStep }, () => {
+      this.setState({
+        renderedSteps,
+        currentStep,
+        previousStep
+      }, () => {
         if (nextStep.user) {
           this.setState({ disabled: false }, () => {
             if (enableMobileAutoFocus || !isMobile()) {
@@ -303,7 +320,10 @@ class ChatBot extends Component {
           renderedSteps.push(nextStep);
           previousSteps.push(nextStep);
 
-          this.setState({ renderedSteps, previousSteps });
+          this.setState({
+            renderedSteps,
+            previousSteps
+          });
         }
       });
     }
@@ -361,9 +381,14 @@ class ChatBot extends Component {
         };
       }
 
-      const values = previousSteps.filter(step => step.value).map(step => step.value);
+      const values = previousSteps.filter(step => step.value)
+        .map(step => step.value);
 
-      handleEnd({ renderedSteps, steps, values });
+      handleEnd({
+        renderedSteps,
+        steps,
+        values
+      });
     }
   };
 
@@ -375,7 +400,8 @@ class ChatBot extends Component {
   isLastPosition = (step) => {
     const { renderedSteps } = this.state;
     const { length } = renderedSteps;
-    const stepIndex = renderedSteps.map(s => s.key).indexOf(step.key);
+    const stepIndex = renderedSteps.map(s => s.key)
+      .indexOf(step.key);
 
     if (length <= 1 || stepIndex + 1 === length) {
       return true;
@@ -394,7 +420,8 @@ class ChatBot extends Component {
 
   isFirstPosition = (step) => {
     const { renderedSteps } = this.state;
-    const stepIndex = renderedSteps.map(s => s.key).indexOf(step.key);
+    const stepIndex = renderedSteps.map(s => s.key)
+      .indexOf(step.key);
 
     if (stepIndex === 0) {
       return true;
@@ -621,14 +648,14 @@ class ChatBot extends Component {
         <HeaderTitle className="rsc-header-title">{headerTitle}</HeaderTitle>
         {floating && (
           <HeaderIcon className="rsc-header-close-button" onClick={() => this.toggleChatBot(false)}>
-            <CloseIcon />
+            <CloseIcon/>
           </HeaderIcon>
         )}
       </Header>
     );
 
     const icon = (this.isInputValueEmpty() || speaking) && recognitionEnable
-      ? <MicIcon /> : <SubmitIcon />;
+      ? <MicIcon/> : <SubmitIcon/>;
 
     const inputPlaceholder = speaking
       ? recognitionPlaceholder
@@ -647,7 +674,7 @@ class ChatBot extends Component {
           >
             {
               typeof floatingIcon === 'string' ? (
-                <FloatingIcon src={floatingIcon} />
+                <FloatingIcon src={floatingIcon}/>
               ) : floatingIcon
             }
           </FloatButton>
@@ -775,7 +802,7 @@ ChatBot.defaultProps = {
   customDelay: 1000,
   enableMobileAutoFocus: false,
   floating: false,
-  floatingIcon: <ChatIcon />,
+  floatingIcon: <ChatIcon/>,
   floatingStyle: {},
   footerStyle: {},
   handleEnd: undefined,
