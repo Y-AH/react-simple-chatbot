@@ -17,7 +17,9 @@ import {
   SubmitButton,
 } from './components';
 import Recognition from './recognition';
-import { ChatIcon, CloseIcon, MicIcon, SubmitIcon, } from './icons';
+import {
+  ChatIcon, CloseIcon, MicIcon, SubmitIcon,
+} from './icons';
 import { isMobile } from './utils';
 import { speakFn } from './speechSynthesis';
 
@@ -60,12 +62,12 @@ class ChatBot extends Component {
 
     const defaultBotSettings = {
       delay: botDelay,
-      avatar: botAvatar
+      avatar: botAvatar,
     };
     const defaultUserSettings = {
       delay: userDelay,
       avatar: userAvatar,
-      hideInput: false
+      hideInput: false,
     };
     const defaultCustomSettings = { delay: customDelay };
 
@@ -191,7 +193,7 @@ class ChatBot extends Component {
     const steps = this.generateRenderedStepsById();
     return typeof trigger === 'function' ? trigger({
       value,
-      steps
+      steps,
     }) : trigger;
   };
 
@@ -202,7 +204,7 @@ class ChatBot extends Component {
     const previousValue = previousSteps[lastStepIndex].value;
     return typeof message === 'function' ? message({
       previousValue,
-      steps
+      steps,
     }) : message;
   };
 
@@ -306,7 +308,7 @@ class ChatBot extends Component {
       this.setState({
         renderedSteps,
         currentStep,
-        previousStep
+        previousStep,
       }, () => {
         if (nextStep.user) {
           this.setState({ disabled: false }, () => {
@@ -322,7 +324,7 @@ class ChatBot extends Component {
 
           this.setState({
             renderedSteps,
-            previousSteps
+            previousSteps,
           });
         }
       });
@@ -387,7 +389,7 @@ class ChatBot extends Component {
       handleEnd({
         renderedSteps,
         steps,
-        values
+        values,
       });
     }
   };
@@ -648,14 +650,14 @@ class ChatBot extends Component {
         <HeaderTitle className="rsc-header-title">{headerTitle}</HeaderTitle>
         {floating && (
           <HeaderIcon className="rsc-header-close-button" onClick={() => this.toggleChatBot(false)}>
-            <CloseIcon/>
+            <CloseIcon />
           </HeaderIcon>
         )}
       </Header>
     );
 
     const icon = (this.isInputValueEmpty() || speaking) && recognitionEnable
-      ? <MicIcon/> : <SubmitIcon/>;
+      ? <MicIcon /> : <SubmitIcon />;
 
     const inputPlaceholder = speaking
       ? recognitionPlaceholder
@@ -674,7 +676,7 @@ class ChatBot extends Component {
           >
             {
               typeof floatingIcon === 'string' ? (
-                <FloatingIcon src={floatingIcon}/>
+                <FloatingIcon src={floatingIcon} />
               ) : floatingIcon
             }
           </FloatButton>
@@ -802,7 +804,7 @@ ChatBot.defaultProps = {
   customDelay: 1000,
   enableMobileAutoFocus: false,
   floating: false,
-  floatingIcon: <ChatIcon/>,
+  floatingIcon: <ChatIcon />,
   floatingStyle: {},
   footerStyle: {},
   handleEnd: undefined,
