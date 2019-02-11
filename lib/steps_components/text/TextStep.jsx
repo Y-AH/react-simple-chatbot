@@ -37,7 +37,7 @@ class TextStep extends Component {
     const { message } = step;
 
     return message ? message.replace(/{previousValue}/g, previousValue) : '';
-  }
+  };
 
   renderMessage = () => {
     const {
@@ -58,7 +58,7 @@ class TextStep extends Component {
     }
 
     return this.getMessage();
-  }
+  };
 
   render() {
     const {
@@ -69,12 +69,14 @@ class TextStep extends Component {
       bubbleStyle,
       hideBotAvatar,
       hideUserAvatar,
+      userBubbleStyle,
+      botBubbleStyle,
     } = this.props;
     const { loading } = this.state;
     const { avatar, user } = step;
 
     const showAvatar = user ? !hideUserAvatar : !hideBotAvatar;
-
+    const appendBubbleStyle = user ? userBubbleStyle : botBubbleStyle;
     return (
       <TextStepContainer className={`rsc-ts ${user ? 'rsc-ts-user' : 'rsc-ts-bot'}`} user={user}>
         <ImageContainer className="rsc-ts-image-container" user={user}>
@@ -93,7 +95,7 @@ class TextStep extends Component {
         </ImageContainer>
         <Bubble
           className="rsc-ts-bubble"
-          style={bubbleStyle}
+          style={{ ...bubbleStyle, ...appendBubbleStyle }}
           user={user}
           showAvatar={showAvatar}
           isFirst={isFirst}
@@ -125,6 +127,8 @@ TextStep.propTypes = {
   step: PropTypes.objectOf(PropTypes.any).isRequired,
   steps: PropTypes.objectOf(PropTypes.any),
   triggerNextStep: PropTypes.func.isRequired,
+  userBubbleStyle: PropTypes.objectOf(PropTypes.any),
+  botBubbleStyle: PropTypes.objectOf(PropTypes.any),
 };
 
 TextStep.defaultProps = {
@@ -132,6 +136,8 @@ TextStep.defaultProps = {
   previousValue: '',
   speak: () => {},
   steps: {},
+  userBubbleStyle: {},
+  botBubbleStyle: {},
 };
 
 export default TextStep;
